@@ -1,0 +1,117 @@
+#root {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100vw;
+	
+	#siteNav {
+		color: white;
+		display: flex;
+		background: #323A45;
+		height: 30px;
+		align-items: center;
+		box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.1);
+		padding: 10px 10px 10px 0;
+		
+		#logo {
+			text-align: center;
+			margin: 0 40px;
+		}
+
+		#searchNavItem {
+			&>input {
+				border-radius: 5px;
+				outline: none;
+				border: 1px solid black;
+				padding: 5px 5px 5px 25px;
+			}
+
+			.searchIcon {
+				position: absolute;
+				color: black;
+				right: 30px;
+				cursor: pointer;
+			}
+
+			.expandIcon {
+				position: absolute;
+				color: black;
+				left: 30px;
+				cursor: pointer;
+			}
+
+			border-left: 1px solid black;
+			height: 100%;
+			display: flex;
+			align-items:center;
+			position: relative;
+		}
+
+		.navItem {
+			&:hover {
+				background: #0760d9;
+			}
+			& > a {
+				color: white;
+				text-decoration: none;
+				height: 100%;
+				display: flex;
+				align-items:center;
+				justify-content: center;
+				width: 100%;
+			}
+    		
+			min-width: 75px;
+			border-left: 1px solid black;
+			height: 100%;
+			cursor: pointer;
+		}
+	}
+
+	#siteBottom {
+		flex:1;
+		display: flex;
+		width: 100%;
+
+		#siteBody {
+			flex: 1;
+			flex-direction: column;
+			overflow: auto;
+			display: flex;
+			
+			#content {
+				flex: 1;
+
+				#popularGamesContainer {
+					margin: 30px auto 20px auto;
+					width: 95%;
+					display: block;
+				}
+
+				#recentViewedContainer {
+					width: 95%;
+					display: block;
+					margin: 30px auto 20px auto;
+				}
+			}
+		}
+
+		& > aside { 
+			width: 217px;
+			background-color: #e8e8e8;
+			box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.1);
+			height: 100%;
+		}
+			
+		footer {
+			background-color: #d9d9d9;
+			text-align: center;
+			font-size: 1.2em;
+			height: 100px;
+			column-count: 3;
+			padding: 15px;
+			box-shadow: 0px 0px 10px #8b8b8b;
+			margin-top: 15px;
+		}
+	}
+}
