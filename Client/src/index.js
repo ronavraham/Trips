@@ -10,15 +10,16 @@ require('angular-material/angular-material.min.css');
 
 require('./services/user.service');
 require('./services/authentication.service')
+require('./services/trip.service');
 
-require('./views/mainView/mainViewCtrl');
+require('./views/main/main.controller');
 require('./views/login/login.controller');
 require('./views/register/register.controller');
 
 angular.module(MODULE_NAME).config(($routeProvider) => {
 	$routeProvider.when('/', {
-		template: require('./views/mainView/mainView.html'),
-		controller: 'mainViewCtrl'
+		template: require('./views/main/main.view.html'),
+		controller: 'MainController'
 	}).when('/login', {
 		template: require('./views/login/login.view.html'),
 		controller: 'LoginController'
