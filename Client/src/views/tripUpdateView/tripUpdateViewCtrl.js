@@ -1,9 +1,9 @@
 import angular from 'angular';
 
-import './tripAddView.less';
+import './tripUpdateView.less';
 
 angular.module('trips')
-	.controller('TripAddViewController', ($scope, $http, AuthenticationService) => {
+	.controller('TripUpdateViewController', ($scope, $http, $routeParams, AuthenticationService) => {
 		$scope.tripTypes = [{ id: "FUN", name: "כיף" },
 		{ id: "TRACK", name: "מסלול" },
 		{ id: "LEARN", name: "למידה" }];
@@ -12,11 +12,15 @@ angular.module('trips')
 		{ id: "ASIA", name: "אסיה" },
 		{ id: "AFRICA", name: "אפריקה" },
 		{ id: "AUSTRALIA", name: "אוסטרליה" },
-		{ id: "EUROPE", name: "אירופה" }];
+			{ id: "EUROPE", name: "אירופה" }];
 
-		$scope.addTrip = async () => {
+		$http.get(`http://localhost:3000/api/trips/getTripById/${$routeParams.id}`).then((res) => {
+			$scope.data = res.data;
+		});
+
+		$scope.updateTrip = async () => {
 			$scope.isRequestSent = true;
-			await $http.post('http://localhost:3000/api/trips/addTrip', {
+			await $http.post('http://localhost:3000/api/trips/updateTrip', {
 				trip: angular.extend({},
 					$scope.data,
 					{ userid: AuthenticationService.globals.currentUser.userid })
@@ -24,7 +28,7 @@ angular.module('trips')
 
 			const ws = new WebSocket('ws://localhost:3001/');
 			ws.onopen = (ev) => {
-				ws.send('trip added');
+				ws.send('trip updated');
 				ws.close();
 			};
 

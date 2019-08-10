@@ -11,7 +11,7 @@ angular.module('trips').controller('LoginController', ($scope, $location, Authen
 		try {
 			var x = await AuthenticationService.Login($scope.username, $scope.password);
 			if (x.data.length) {
-				AuthenticationService.SetCredentials($scope.username, $scope.password);
+				AuthenticationService.SetCredentials($scope.username, $scope.password, x.data[0]._id);
 				$location.path('/');
 			}
 			else {

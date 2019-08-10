@@ -15,6 +15,10 @@ require('./services/trip.service');
 require('./views/main/main.controller');
 require('./views/login/login.controller');
 require('./views/register/register.controller');
+require('./views/tripView/tripViewCtrl.js');
+require('./views/userTripsList/userTripsListCtrl.js');
+require('./views/tripUpdateView/tripUpdateViewCtrl.js');
+require('./views/tripAddView/tripAddViewCtrl.js');
 
 angular.module(MODULE_NAME).config(($routeProvider) => {
 	$routeProvider.when('/', {
@@ -26,6 +30,18 @@ angular.module(MODULE_NAME).config(($routeProvider) => {
 	}).when('/register', {
 		template: require('./views/register/register.view.html'),
 		controller: 'RegisterController'
+	}).when('/tripView', {
+		template: require('./views/tripView/tripView.html'),
+		controller: 'TripViewController'
+	}).when('/mytrips', {
+		template: require('./views/userTripsList/userTripsListView.html'),
+		controller: 'UserTripsListController'
+	}).when('/tripUpdate', {
+		template: require('./views/tripUpdateView/tripUpdateView.html'),
+		controller: 'TripUpdateViewController'
+	}).when('/tripAdd', {
+		template: require('./views/tripAddView/tripAddView.html'),
+		controller: 'TripAddViewController'
 	});
 });
 
@@ -37,7 +53,7 @@ function run($rootScope, $location, $cookies, $http, AuthenticationService) {
 		$http.defaults.headers.common['Authorization'] = 'Basic ' + AuthenticationService.globals.currentUser.authdata;
 	}
 
-	$rootScope.$on('$locationChangeStart', function(event, next, current) {
+	$rootScope.$on('$locationChangeStart', function (event, next, current) {
 		// redirect to login page if not logged in and trying to access a restricted page
 		var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
 		var loggedIn = AuthenticationService.globals.currentUser;

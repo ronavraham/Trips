@@ -31,13 +31,14 @@ import angular from 'angular';
 
 		}
 
-		function SetCredentials(username, password) {
+		function SetCredentials(username, password, userid) {
 			var authdata = Base64.encode(username + ':' + password);
 
 			service.globals = {
 				currentUser: {
 					username: username,
-					authdata: authdata
+					authdata: authdata,
+					userid: userid
 				}
 			};
 

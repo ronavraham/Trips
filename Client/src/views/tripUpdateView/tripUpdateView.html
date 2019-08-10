@@ -1,7 +1,7 @@
-<div id="tripAddView">
-	<md-content id="tripAddForm" layout-padding>
+<div id="tripUpdateView">
+	<md-content id="tripUpdateForm" layout-padding>
 		<md-card>
-			<form name="TripAdd">
+			<form name="TripUpdate">
 				<md-input-container class="md-block">
 					<label>Name</label>
 					<input name="Name" ng-model="data.name" />
@@ -46,7 +46,7 @@
 				</md-input-container>
 
 				<div>
-					<md-button ng-click="addTrip()" ng-disabled="isRequestSent">Add</md-button>
+					<md-button ng-click="updateTrip()" ng-disabled="isRequestSent">Update</md-button>
 				</div>
 			</form>
 		</md-card>

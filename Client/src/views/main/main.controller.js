@@ -22,4 +22,8 @@ angular.module('trips').controller('MainController', ($scope, $location, TripSer
 			$scope.$applyAsync();
 		}
 	})();
+
+	$scope.gotoTrip = (id) => {
+		window.location.href = `#!tripView?id=${id}`;
+	}
 });

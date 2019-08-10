@@ -1,10 +1,10 @@
 <div style="display: flex" >
   <div ng-repeat="trip in trips">
-    <md-card style="
+    <md-card ng-click="gotoTrip(trip._id)" style="
     width: 450px;
     height : 415px
   ">
-          <img style="height: 215px;" ng-src="{{trip.imageUrl}}" class="md-card-image" alt="Washed Out">
+          <img style="height: 215px;" ng-src="{{trip.image}}" class="md-card-image" alt="Washed Out">
           <md-card-title>
             <md-card-title-text>
               <span class="md-headline">{{trip.name}}</span>
