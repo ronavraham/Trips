@@ -9,7 +9,10 @@ export default class AppCtrl {
 		ctx.fillStyle = 'white';
 		ctx.fillText('Trips', 10, 30);
 
+		$scope.auth = AuthenticationService;
+
 		$scope.logout = () => {
+			console.log(AuthenticationService.globals);
 			AuthenticationService.ClearCredentials();
 			$location.path('/login')
 		}

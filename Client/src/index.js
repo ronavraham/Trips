@@ -29,18 +29,18 @@ angular.module(MODULE_NAME).config(($routeProvider) => {
 	});
 });
 
-run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
-function run($rootScope, $location, $cookies, $http) {
+run.$inject = ['$rootScope', '$location', '$cookies', '$http', 'AuthenticationService'];
+function run($rootScope, $location, $cookies, $http, AuthenticationService) {
 	// keep user logged in after page refresh
-	$rootScope.globals = $cookies.getObject('globals') || {};
-	if ($rootScope.globals.currentUser) {
-		$http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+	AuthenticationService.globals = $cookies.getObject('globals') || {};
+	if (AuthenticationService.globals.currentUser) {
+		$http.defaults.headers.common['Authorization'] = 'Basic ' + AuthenticationService.globals.currentUser.authdata;
 	}
 
 	$rootScope.$on('$locationChangeStart', function(event, next, current) {
 		// redirect to login page if not logged in and trying to access a restricted page
 		var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-		var loggedIn = $rootScope.globals.currentUser;
+		var loggedIn = AuthenticationService.globals.currentUser;
 		if (restrictedPage && !loggedIn) {
 			$location.path('/login');
 		}
