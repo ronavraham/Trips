@@ -9,7 +9,7 @@ mainComp();
 require('angular-material/angular-material.min.css');
 
 require('./services/user.service');
-require('./services/authentication.service')
+require('./services/authentication.service');
 require('./services/trip.service');
 
 require('./views/main/main.controller');

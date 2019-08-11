@@ -20,6 +20,15 @@ router.get('/:id', async (req, res, next) => {
     };
 });
 
+router.get('/email/:email', async (req, res, next) => {
+    try {
+        const user = await usersRepo.getUserByEmail(req.params.email);
+        res.send(user);
+    } catch (err) {
+        res.status(500).send(`There was a problem getting games list.\n Error: ${err.message}`)
+    };
+});
+
 router.post('/adduser', async (req, res, next) => {
     const user = req.body.user;
 

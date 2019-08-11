@@ -40,6 +40,17 @@ const dbHelper = {
 			});
 		});
 	},
+	findByEmail(client, dbName, collectionName, email) {
+		return new Promise((resolve, reject) => {
+			client.db(dbName).collection(collectionName).findOne({ email: { $eq: email }}, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result);
+				}
+			});
+		});
+	},
 	groupBy(client, dbName, collectionName, groupParams, match) {
 		return new Promise((resolve, reject) => {
 			client.db(dbName).collection(collectionName).aggregate([ { $match: match }, { $group: groupParams } ]).

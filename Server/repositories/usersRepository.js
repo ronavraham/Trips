@@ -25,6 +25,18 @@ const usersRepository = {
             throw err;
         }
     },
+    getUserByEmail: async (email) => {
+        try {
+            const client = await dbHelper.getDbClient();
+            const user = await dbHelper.findByEmail(client, 'Trips', 'Users', email);
+            dbHelper.closeClient(client);
+
+            return user;
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    },
     addUser: async (newuser) => {
         try {
             const client = await dbHelper.getDbClient();

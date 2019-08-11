@@ -13,6 +13,7 @@ import angular from 'angular';
 
         service.GetAll = GetAll;
         service.GetById = GetById;
+        service.GetByEmail = GetByEmail;
         service.Create = Create;
 
         return service;
@@ -23,6 +24,10 @@ import angular from 'angular';
 
         function GetById(id) {
 			return $http.get('http://localhost:3000/api/users/' + id).then(handleSuccess, handleError('Error getting user by id'));
+        }
+
+        function GetByEmail(email) {
+			return $http.get('http://localhost:3000/api/users/email/' + email).then(handleSuccess, handleError('Error getting user by email'));
         }
 
         function Create(user) {
