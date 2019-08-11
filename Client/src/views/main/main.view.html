@@ -5,6 +5,7 @@ border-left: 5px solid black;">
     Hello there! the temperature near you is {{temp}}&#176
     <md-icon style="margin-left: 6px" ng_bind="'wb_sunny'"></md-icon>
 </h5>
+<h2 style="margin-left: 12px; margin-bottom: 15px">These are the top {{numOfRec}} recommended trips for YOU!</h2>
 <div style="display: flex" >
   <div ng-repeat="trip in trips track by $index">
     <md-card ng-if="trip.visible" style="

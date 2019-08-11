@@ -41,7 +41,8 @@ angular.module('trips').controller('MainController', ($scope, $http, TripService
 		$scope.trips.forEach((e, i) => {
 			e.visible = i < numOfItems;
 		});
-
+		
+		this.calcVis();
 		$scope.$applyAsync();
 	}
 
@@ -68,6 +69,12 @@ angular.module('trips').controller('MainController', ($scope, $http, TripService
 				}
 			});
 		$scope.temp = res.data.main.temp
+	}
+
+	this.calcVis = () => {
+		$scope.numOfRec = $scope.trips.reduce((total, curr) => {
+			return curr.visible ? total + 1: total;
+		}, 0);
 	}
 
 	getLocation();
