@@ -35,15 +35,36 @@
 					<input name="Image" ng-model="data.image" />
 				</md-input-container>
 
-				<md-input-container class="md-block">
-					<label>From Date</label>
-					<md-datepicker ng-model="data.fromDate"></md-datepicker>
-				</md-input-container>
+				<div style="display:flex">
 
-				<md-input-container class="md-block">
-					<label>To Date</label>
-					<md-datepicker ng-model="data.toDate"></md-datepicker>
-				</md-input-container>
+					<div style="padding-right: 18px;">
+
+						<md-input-container class="md-block">
+							<label>From Date</label>
+							<md-datepicker ng-model="data.fromDate"></md-datepicker>
+						</md-input-container>
+
+						<md-input-container class="md-block">
+							<label>To Date</label>
+							<md-datepicker ng-model="data.toDate"></md-datepicker>
+						</md-input-container>
+
+					</div>
+					<div>
+
+						<md-input-container class="md-block">
+							<label>Lat</label>
+							<input name="Image" ng-model="data.lat" />
+						</md-input-container>
+
+						<md-input-container class="md-block">
+							<label>Long</label>
+							<input name="Image" ng-model="data.long" />
+						</md-input-container>
+
+					</div>
+
+				</div>
 
 				<div>
 					<md-button ng-click="addTrip()" ng-disabled="isRequestSent">Add</md-button>
