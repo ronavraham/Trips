@@ -5,10 +5,10 @@ import angular from 'angular';
 
 	angular
 		.module('trips')
-		.factory('AuthenticationService', AuthenticationService);
+		.service('AuthenticationService', AuthenticationService);
 
-	AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService'];
-	function AuthenticationService($http, $cookies, $rootScope) {
+	AuthenticationService.$inject = ['$http', '$cookies'];
+	function AuthenticationService($http, $cookies) {
 		var service = {};
 
 		service.Login = Login;
@@ -31,13 +31,14 @@ import angular from 'angular';
 
 		}
 
-		function SetCredentials(username, password) {
+		function SetCredentials(username, password, userid) {
 			var authdata = Base64.encode(username + ':' + password);
 
-			$rootScope.globals = {
+			service.globals = {
 				currentUser: {
 					username: username,
-					authdata: authdata
+					authdata: authdata,
+					userid: userid
 				}
 			};
 
@@ -47,11 +48,11 @@ import angular from 'angular';
 			// store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
 			var cookieExp = new Date();
 			cookieExp.setDate(cookieExp.getDate() + 7);
-			$cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
+			$cookies.putObject('globals', service.globals, { expires: cookieExp });
 		}
 
 		function ClearCredentials() {
-			$rootScope.globals = {};
+			service.globals = {};
 			$cookies.remove('globals');
 			$http.defaults.headers.common.Authorization = 'Basic';
 		}

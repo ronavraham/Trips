@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const user = await usersRepo.getUserById(req.id);
+        const user = await usersRepo.getUserById(req.params.id);
         res.send(user);
     } catch (err) {
         res.status(500).send(`There was a problem getting games list.\n Error: ${err.message}`)

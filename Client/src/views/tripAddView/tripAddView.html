@@ -1,0 +1,54 @@
+<div id="tripAddView">
+	<md-content id="tripAddForm" layout-padding>
+		<md-card>
+			<form name="TripAdd">
+				<md-input-container class="md-block">
+					<label>Name</label>
+					<input name="Name" ng-model="data.name" />
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>Description</label>
+					<input name="Description" ng-model="data.description" />
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>Trip Type</label>
+					<md-select ng-model="data.selectedTripType">
+						<md-optgroup label="tripTypes">
+							<md-option ng-repeat="item in tripTypes" ng-value="item.id">{{item.name}}</md-option>
+						</md-optgroup>
+					</md-select>
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>Trip Area</label>
+					<md-select ng-model="data.selectedTripArea">
+						<md-optgroup label="tripAreas">
+							<md-option ng-repeat="item in tripAreas" ng-value="item.id">{{item.name}}</md-option>
+						</md-optgroup>
+					</md-select>
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>Image</label>
+					<input name="Image" ng-model="data.image" />
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>From Date</label>
+					<md-datepicker ng-model="data.fromDate"></md-datepicker>
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>To Date</label>
+					<md-datepicker ng-model="data.toDate"></md-datepicker>
+				</md-input-container>
+
+				<div>
+					<md-button ng-click="addTrip()" ng-disabled="isRequestSent">Add</md-button>
+				</div>
+			</form>
+		</md-card>
+	</md-content>
+</div>

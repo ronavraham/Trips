@@ -1,0 +1,15 @@
+<div id="tripViewContainer">
+	<div class="GridComponent">
+		<img ng-src="{{data.image}}" style="border-radius: 10px; place-self: center; height: 100%; width: 100%; background-size: 100% 100%; grid-area: cTXeRk / cTXeRk / cTXeRk / cTXeRk;">
+		<h1 style="place-self: center start; color: rgb(255, 255, 255); font-weight: bold; text-shadow: rgb(0, 0, 0) 0px 0px 1px; grid-area: xOxCMA / xOxCMA / xOxCMA / xOxCMA; padding-left: 20px;">
+			{{ data.name }}
+		</h1>
+		<h4 style="place-self: end start; text-shadow: rgb(0, 0, 0) 0px 0px 1px; color: white; padding-left: 40px; grid-area: qRNqBy / qRNqBy / qRNqBy / qRNqBy;">
+			{{ data.fromDate | date }} - {{ data.toDate | date}}
+		</h4>
+		<label style="place-self: center start; font-weight: bold; padding: 20px; grid-area: vYbQLc / vYbQLc / vYbQLc / vYbQLc;">Description:</label>
+		<article style="place-self: start; padding: 5px; height: 150px; overflow: hidden; width: 100%; grid-area: vDhvZy / vDhvZy / vDhvZy / vDhvZy; margin-left: 15px;">
+			{{ data.description }}
+		</article>
+	</div>
+</div>

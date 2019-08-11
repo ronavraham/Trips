@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Client",
+    "\\Client\\src",
+    "\\Client\\src\\components",
+    "\\Client\\src\\components\\main",
+    "\\Client\\src\\views",
+    "\\Client\\src\\views\\register",
+    "\\Client\\src\\views\\tripAddView",
+    "\\Server",
+    "\\Server\\repositories"
+  ],
+  "SelectedNode": "\\Client\\src\\views\\tripAddView\\tripAddViewCtrl.js",
+  "PreviewInSolutionExplorer": false
+}

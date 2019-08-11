@@ -31,4 +31,8 @@ angular.module('trips').controller('MainController', ($scope, $location, TripSer
 			return x;
 		}));
 	}
+	
+	$scope.gotoTrip = (id) => {
+		window.location.href = `#!tripView?id=${id}`;
+	}
 });

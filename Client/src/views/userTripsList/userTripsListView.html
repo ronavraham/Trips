@@ -1,0 +1,14 @@
+<div id="userTripsListView">
+	<md-button class="md-raised md-primary" ng-click="addTrip()">Add</md-button>
+	<md-list>
+		<md-list-item class="md-2-line" ng-repeat="item in trips" ng-click="openTripView(item._id)">
+			<img ng-src="{{item.image}}" class="md-avatar" alt="{{item.name}}" />
+			<div class="md-list-item-text">
+				<h3>{{item.name}}</h3>
+				<p>{{item.description}}</p>
+			</div>
+			<md-button class="md-raised md-primary" ng-click="updateTrip(item._id)">Update</md-button>
+			<md-button class="md-raised md-warn" ng-click="deleteTrip(item._id)">Delete</md-button>
+		</md-list-item>
+	</md-list>
+</div>

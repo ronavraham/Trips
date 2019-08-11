@@ -8,6 +8,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const tripsRouter = require('./routes/trips');
 
+const ws = require('./wsClient')
+
 const app = express();
 
 app.use(logger('dev'));
