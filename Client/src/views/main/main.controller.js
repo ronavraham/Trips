@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-angular.module('trips').controller('MainController', ($scope, $location, TripService, UserService) => {
+angular.module('trips').controller('MainController', ($scope, $http, TripService, UserService) => {
 
 	$scope.trips = [];
 
@@ -50,4 +50,25 @@ angular.module('trips').controller('MainController', ($scope, $location, TripSer
 	}
 
 	window.addEventListener('resize', this.windowresize);
+
+	var getLocation = () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(getWeather)
+		}
+	}
+
+	var getWeather = async (position) => {
+		var res = await $http.get('https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather',
+			{
+				params: {
+					lat: position.coords.latitude,
+					lon: position.coords.longitude,
+					units: 'metric',
+					APPID: '50e5e552a74c7defcc7607a0fce0fdf6'
+				}
+			});
+		$scope.temp = res.data.main.temp
+	}
+
+	getLocation();
 });

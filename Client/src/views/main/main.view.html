@@ -1,3 +1,10 @@
+<h5 ng-if="temp" style="margin-left: 10px; margin-right: 10px;
+background-color: #87cefa87;
+padding: 8px;
+border-left: 5px solid black;">
+    Hello there! the temperature near you is {{temp}}&#176
+    <md-icon style="margin-left: 6px" ng_bind="'wb_sunny'"></md-icon>
+</h5>
 <div style="display: flex" >
   <div ng-repeat="trip in trips track by $index">
     <md-card ng-if="trip.visible" style="
