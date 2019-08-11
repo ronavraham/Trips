@@ -1,6 +1,6 @@
 <div style="display: flex" >
-  <div ng-repeat="trip in trips">
-    <md-card style="
+  <div ng-repeat="trip in trips track by $index">
+    <md-card ng-if="trip.visible" style="
     width: 450px;
     height : 475px
   ">

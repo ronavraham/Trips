@@ -2,10 +2,11 @@ import angular from 'angular';
 
 angular.module('trips').controller('MainController', ($scope, $location, TripService, UserService) => {
 
+	$scope.trips = [];
+
 	// This function runs itself on init of the controller
 	(this.getAllTrips = async () => {
 		$scope.dataLoading = true;
-		$scope.trips = [];
 
 		try {
 			var alltrips = await TripService.GetAll();
@@ -13,6 +14,7 @@ angular.module('trips').controller('MainController', ($scope, $location, TripSer
 
 			if (alltripsAndusers.length) {
 				$scope.trips = alltripsAndusers;
+				this.windowresize();
 			}
 		}
 		catch (error) {
@@ -28,11 +30,24 @@ angular.module('trips').controller('MainController', ($scope, $location, TripSer
 		return await Promise.all(arr.map(async (x) => {
 			var user = await UserService.GetByEmail(x.email);
 			x.username = user.username;
+			x.visible = true;
 			return x;
 		}));
 	}
-	
+
+	this.windowresize = () => {
+		var numOfItems = Math.floor(window.innerWidth / 450);
+
+		$scope.trips.forEach((e, i) => {
+			e.visible = i < numOfItems;
+		});
+
+		$scope.$applyAsync();
+	}
+
 	$scope.gotoTrip = (id) => {
 		window.location.href = `#!tripView?id=${id}`;
 	}
+
+	window.addEventListener('resize', this.windowresize);
 });
