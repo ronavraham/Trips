@@ -1,4 +1,4 @@
-<div>
+<div style="display:flex">
     <div ng-if="dataLoading" layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 30px;">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
@@ -15,4 +15,9 @@
             </div>
         </md-list-item>
     </md-list>
+    <div>
+        <video src="{{videoUrl}}"  controls style="margin-left: 200px;
+        width: 600px;
+        margin-top: 20px;"></video>
+    </div>
 </div>

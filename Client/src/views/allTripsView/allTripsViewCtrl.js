@@ -6,6 +6,7 @@ angular.module('trips').controller('AllTripsViewController', ($scope, $http, Tri
     
     $scope.trips = [];
     $scope.ws = new WebSocket('ws://localhost:3001/');
+    $scope.videoUrl = "https://youtu.be/c9tiHoctyuk?t=19";
 
 	// This function runs itself on init of the controller
 	(this.getAllTrips = async () => {
