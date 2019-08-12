@@ -1,8 +1,11 @@
 import angular from 'angular';
 
-angular.module('trips').controller('MainController', ($scope, $http, TripService, UserService) => {
+angular.module('trips').controller('MainController', ($scope, $http, TripService, UserService, AuthenticationService) => {
 
 	$scope.trips = [];
+	UserService.GetById(AuthenticationService.globals.currentUser.userid).then((res) => {
+		$scope.username = res.username;
+	});
 
 	// This function runs itself on init of the controller
 	(this.getAllTrips = async () => {
@@ -59,6 +62,7 @@ angular.module('trips').controller('MainController', ($scope, $http, TripService
 	}
 
 	var getWeather = async (position) => {
+		$scope.dataLoading = true;
 		var res = await $http.get('https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather',
 			{
 				params: {
@@ -68,6 +72,8 @@ angular.module('trips').controller('MainController', ($scope, $http, TripService
 					APPID: '50e5e552a74c7defcc7607a0fce0fdf6'
 				}
 			});
+		
+		$scope.dataLoading = false;
 		$scope.temp = res.data.main.temp
 	}
 

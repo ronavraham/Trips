@@ -20,6 +20,7 @@ require('./views/userTripsList/userTripsListCtrl.js');
 require('./views/tripUpdateView/tripUpdateViewCtrl.js');
 require('./views/tripAddView/tripAddViewCtrl.js');
 require('./views/mapView/mapViewCtrl.js');
+require('./views/allTripsView/allTripsViewCtrl.js');
 
 angular.module(MODULE_NAME).config(($routeProvider) => {
 	$routeProvider.when('/', {
@@ -46,6 +47,9 @@ angular.module(MODULE_NAME).config(($routeProvider) => {
 	}).when('/mytripsonmap', {
 		template: require('./views/mapView/mapView.html'),
 		controller: 'MapViewController'
+	}).when('/alltrips', {
+		template: require('./views/alltripsView/alltripsView.html'),
+		controller: 'AllTripsViewController'
 	});
 });
 

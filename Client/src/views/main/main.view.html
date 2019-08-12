@@ -1,40 +1,45 @@
-<h5 ng-if="temp" style="margin-left: 10px; margin-right: 10px;
+<div>
+  <div ng-if="dataLoading" layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 30px;">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+  <h5 ng-if="temp" style="margin-left: 10px; margin-right: 10px;
 background-color: #87cefa87;
 padding: 8px;
 border-left: 5px solid black;">
-    Hello there! the temperature near you is {{temp}}&#176
+    Hello {{username}}!  The temperature near you is {{temp}}&#176
     <md-icon style="margin-left: 6px" ng_bind="'wb_sunny'"></md-icon>
-</h5>
-<h2 style="margin-left: 12px; margin-bottom: 15px">These are the top {{numOfRec}} recommended trips for YOU!</h2>
-<div style="display: flex" >
-  <div ng-repeat="trip in trips track by $index">
-    <md-card ng-if="trip.visible" style="
-    width: 450px;
-    height : 475px
-  ">
-    <md-card-header>
-        <md-card-avatar>
-            <img class="md-user-avatar" src="http://www.otjhs.sakarya.edu.tr/assets/app/images/buddy_sample.png"/>
-          </md-card-avatar>
-        <md-card-header-text>
-          <span class="md-title">{{trip.username}}</span>
-          <span class="md-subhead">{{trip.views}} views</span>
-        </md-card-header-text>
-      </md-card-header>
-      <img style="height: 215px;" ng-src="{{trip.image}}" class="md-card-image" alt="Washed Out">
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">{{trip.name}}</span>
-        </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
-        <p>
-          {{trip.description}}
-        </p>
-      </md-card-content>
-      <md-card-actions layout="row" layout-align="end center">
-          <md-button ng-click="gotoTrip(trip._id)">Goto trip page</md-button>
-      </md-card-actions>
-    </md-card>
+  </h5>
+  <h2 ng-if="!dataLoading" style="margin-left: 12px; margin-bottom: 15px">These are the top {{numOfRec}} recommended trips for YOU!</h2>
+  <div style="display: flex" >
+    <div ng-repeat="trip in trips track by $index">
+      <md-card ng-if="trip.visible" style="
+      width: 450px;
+      height : 475px
+    ">
+      <md-card-header>
+          <md-card-avatar>
+              <img class="md-user-avatar" src="http://www.otjhs.sakarya.edu.tr/assets/app/images/buddy_sample.png"/>
+            </md-card-avatar>
+          <md-card-header-text>
+            <span class="md-title">{{trip.username}}</span>
+            <span class="md-subhead">{{trip.views}} views</span>
+          </md-card-header-text>
+        </md-card-header>
+        <img style="height: 215px;" ng-src="{{trip.image}}" class="md-card-image" alt="Washed Out">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{trip.name}}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <p>
+            {{trip.description}}
+          </p>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-click="gotoTrip(trip._id)">Goto trip page</md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
   </div>
 </div>
