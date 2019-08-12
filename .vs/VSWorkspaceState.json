@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Client",
+    "\\Client\\src",
     "\\Client\\src\\components",
-    "\\Client\\src\\components\\main",
-    "\\Client\\src\\services",
     "\\Client\\src\\views",
+    "\\Client\\src\\views\\main",
+    "\\Client\\src\\views\\mapView",
+    "\\Client\\src\\views\\tripAddView",
     "\\Client\\src\\views\\tripUpdateView",
-    "\\Client\\src\\views\\tripView",
-    "\\Server\\bin",
-    "\\Server\\repositories",
-    "\\Server\\routes"
+    "\\Client\\src\\views\\userTripsList"
   ],
-  "SelectedNode": "\\Client",
+  "SelectedNode": "\\Client\\src\\views\\main\\main.controller.js",
   "PreviewInSolutionExplorer": false
 }
