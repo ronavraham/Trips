@@ -56,5 +56,14 @@ router.post('/deleteTrip', async (req, res, next) => {
     };
 });
 
+router.get('/getUserTripsByTypes/:userId', async (req, res, next) => {
+    try {
+        const tripsList = await tripsRepo.getUserTripsByTypes(req.params.userId);
+        res.send(tripsList);
+    } catch (err) {
+        res.status(500).send(`There was a problem getting trips by types.\n Error: ${err.message}`)
+    };
+});
+
 
 module.exports = router;

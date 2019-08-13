@@ -87,6 +87,25 @@ const tripsRepository = {
             dbHelper.closeClient(client);
         }
     },
+    getUserTripsByTypes: async (userId) => {
+        let client;
+        try {
+            client = await dbHelper.getDbClient();
+            const tripsList = await dbHelper.groupBy(client, 'Trips', 'Trips', { _id: '$type', count: { $sum: 1 }}, { userid: { $eq: userId }});
+
+            return tripsList.map((trip) => {
+                return {
+                    type: trip._id,
+                    count: trip.count
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        } finally {
+            dbHelper.closeClient(client);
+        }
+    }
 }
 
 module.exports = tripsRepository;
