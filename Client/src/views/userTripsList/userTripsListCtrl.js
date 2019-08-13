@@ -5,9 +5,11 @@ import './userTripsListStyle.less';
 angular.module('trips')
 	.controller('UserTripsListController', ($scope, $http, AuthenticationService) => {
 		$scope.url = 'https://images.igdb.com/igdb/image/upload/t_cover_big/faqrpb5usp5leipmwgtq.jpg';
-
+		$scope.dataLoading = true;
+		
 		$http.get(`http://localhost:3000/api/trips/getUserTrips/${AuthenticationService.globals.currentUser.userid}`).then((res) => {
 			$scope.trips = res.data;
+			$scope.dataLoading = false;
 		});
 
 		$scope.ws = new WebSocket('ws://localhost:3001/');

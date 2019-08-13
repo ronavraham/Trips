@@ -1,0 +1,23 @@
+<div style="display:flex">
+    <div ng-if="dataLoading" layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 30px;">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <md-list>
+        <md-list-item class="md-2-line" ng-repeat="trip in trips" ng-click="openTripView(trip._id)">
+            <img ng-src="{{trip.image}}" class="md-avatar" alt="{{trip.name}}" />
+            <div class="md-list-item-text">
+                <h3>{{trip.name}}</h3>
+                <p>{{trip.description}}</p>
+            </div>
+            <div ng-if="trip.canUpdateOrDel">
+                <md-button class="md-raised md-primary" ng-click="updateTrip(trip._id)">Update</md-button>
+                <md-button class="md-raised md-warn" ng-click="deleteTrip(trip._id)">Delete</md-button>
+            </div>
+        </md-list-item>
+    </md-list>
+    <div>
+        <video src="{{videoUrl}}"  controls style="margin-left: 200px;
+        width: 600px;
+        margin-top: 20px;"></video>
+    </div>
+</div>

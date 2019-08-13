@@ -21,6 +21,7 @@ require('./views/tripUpdateView/tripUpdateViewCtrl.js');
 require('./views/tripAddView/tripAddViewCtrl.js');
 require('./views/mapView/mapViewCtrl.js');
 require('./views/statistics/statistics.controller');
+require('./views/allTripsView/allTripsViewCtrl.js');
 
 angular.module(MODULE_NAME).config(($routeProvider) => {
 	$routeProvider.when('/', {
@@ -50,6 +51,9 @@ angular.module(MODULE_NAME).config(($routeProvider) => {
 	}).when('/statistics', {
 		template: require('./views/statistics/statistics.view.html'),
 		controller: 'StatisticsController'
+	}).when('/alltrips', {
+		template: require('./views/alltripsView/alltripsView.html'),
+		controller: 'AllTripsViewController'
 	});
 });
 
