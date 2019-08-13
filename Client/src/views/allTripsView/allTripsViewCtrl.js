@@ -4,9 +4,13 @@ import './allTripsView.less';
 
 angular.module('trips').controller('AllTripsViewController', ($scope, $http, TripService, UserService, AuthenticationService) => {
     
+    $scope.regions = ['Europe', 'Asia', 'South America', 'North America', 'Middle East', 'Africa'];
+    $scope.types = ['Exotic', 'City', 'Trekk'];
     $scope.trips = [];
+    $scope.allTrips = [];
     $scope.ws = new WebSocket('ws://localhost:3001/');
-    $scope.videoUrl = "https://youtu.be/c9tiHoctyuk?t=19";
+    $scope.videoUrl = require('@/assets/Sri Lanka.mp4');
+    $scope.searchData = {};
 
 	// This function runs itself on init of the controller
 	(this.getAllTrips = async () => {
@@ -24,7 +28,8 @@ angular.module('trips').controller('AllTripsViewController', ($scope, $http, Tri
             });
 
 			if (alltripsAndusers.length) {
-				$scope.trips = alltripsAndusers;
+                $scope.trips = alltripsAndusers;
+                $scope.allTrips = alltripsAndusers;
 			}
 		}
 		catch (error) {
@@ -60,4 +65,22 @@ angular.module('trips').controller('AllTripsViewController', ($scope, $http, Tri
         window.location.href = `#!tripUpdate?id=${id}`;
         $scope.ws.close();
     };
+
+    $scope.searchA = async () => {
+        $scope.searchLoad = true;
+        $scope.trips = await TripService.GetByNameTypeRegion($scope.searchData.name, $scope.searchData.type, $scope.searchData.region);
+        $scope.searchLoad = false;
+        $scope.$applyAsync();
+    }
+
+    $scope.searchB = async () => {
+        $scope.searchLoad = true;
+        $scope.trips = await TripService.GetByDescViewDate($scope.searchData.desc, $scope.searchData.viewsFrom, $scope.searchData.viewsTo, $scope.searchData.fromDate, $scope.searchData.toDate);
+        $scope.searchLoad = false;
+        $scope.$applyAsync();
+    }
+
+    $scope.clearSearch = () => {
+        $scope.trips = $scope.allTrips;
+    }
 });

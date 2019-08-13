@@ -1,8 +1,86 @@
-<div style="display:flex">
-    <div ng-if="dataLoading" layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 30px;">
+<div ng-if="dataLoading" layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 30px;">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-if="!dataLoading" style="display:flex; height: inherit;
+align-items: stretch;">
+    <div style="border-right: 1px solid #d4d4d4; padding: 15px; flex: 3">
+
+        <div style="    display: flex;
+        border-bottom: 1px solid #d4d4d4;
+        padding-bottom: 20px;">
+
+            <div style="flex: 1;
+            padding-right: 35px;
+            border-right: 1px solid #d4d4d4;">
+                <h4 style="margin-bottom: 30px;">Search A</h4>
+                <md-input-container md-no-float class="md-block" style="margin-bottom: 0px">
+                    <input ng-model="searchData.name" type="text" placeholder="Search trip name.." >
+                    <md-icon style="margin-left: 6px; display:inline-block;" ng_bind="'search'"></md-icon>
+                </md-input-container>
+                <md-input-container style="width: 100%;">
+                    <label>Region</label>
+                    <md-select ng-model="searchData.region">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="r in regions" ng-value="r">
+                        {{r}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <br>
+                <md-input-container style="width: 100%;">
+                    <label>Type</label>
+                    <md-select ng-model="searchData.type">
+                        <md-option><em>None</em></md-option>
+                        <md-option ng-repeat="t in types" ng-value="t">
+                        {{t}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-button class="md-raised md-primary" ng-click="searchA()">Search A</md-button>
+            </div>
+            <div style="margin-left:30px">
+                <h4 style="margin-bottom: 30px;">Search B</h4>
+                <md-input-container md-no-float class="md-block" style="margin-bottom: 0px">
+                    <input ng-model="searchData.desc" type="text" placeholder="Search trip description.." >
+                    <md-icon style="margin-left: 6px; display:inline-block;" ng_bind="'search'"></md-icon>
+                </md-input-container>
+                <div style="display: flex">
+                    <md-input-container>
+                        <label>Views from</label>
+                        <input type="number" step="any" ng-model="searchData.viewsFrom" min="0" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Views to</label>
+                        <input type="number" step="any" ng-model="searchData.viewsTo" min="0" />
+                    </md-input-container>
+                </div>
+                <div style="display: flex;">
+                    <md-input-container style="margin-top: -5px;
+                    margin-left: -20px; height: 35px">
+                        <label>From date</label>
+                        <md-datepicker ng-model="searchData.fromDate"></md-datepicker>
+                    </md-input-container>
+                    <md-input-container style="margin-top: -5px; height: 35px">
+                        <label>To date</label>
+                        <md-datepicker ng-model="searchData.toDate"></md-datepicker>
+                    </md-input-container>
+                </div>
+                <md-button class="md-raised md-primary" ng-click="searchB()">Search B</md-button>
+            </div>
+        </div>
+        <div style="min-width:525px; padding-left: 80px;">
+            <video muted controls style="width: 500px;
+            margin-top: 20px; margin-right: 10px;">
+                <source src="{{videoUrl}}" type="video/mp4" />
+            </video>
+        </div>
+    </div>
+
+    <div ng-if="searchLoad" layout="row" layout-sm="column" layout-align="space-around" style="flex: 4; margin-top: 30px;">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
-    <md-list>
+    <md-list ng-if="!searchLoad" style="flex: 4">
+        <md-button class="md-raised md-primary" ng-click="clearSearch()">Reset Search</md-button>
         <md-list-item class="md-2-line" ng-repeat="trip in trips" ng-click="openTripView(trip._id)">
             <img ng-src="{{trip.image}}" class="md-avatar" alt="{{trip.name}}" />
             <div class="md-list-item-text">
@@ -14,10 +92,6 @@
                 <md-button class="md-raised md-warn" ng-click="deleteTrip(trip._id)">Delete</md-button>
             </div>
         </md-list-item>
+        <h4 ng-if="!searchLoad && trips.length === 0" style="margin-left:10px;" >No results found..</h4>
     </md-list>
-    <div>
-        <video src="{{videoUrl}}"  controls style="margin-left: 200px;
-        width: 600px;
-        margin-top: 20px;"></video>
-    </div>
 </div>
