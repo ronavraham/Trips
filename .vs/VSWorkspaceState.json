@@ -1,7 +1,6 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Client",
     "\\Client\\src",
     "\\Client\\src\\components",
     "\\Client\\src\\views",
@@ -11,6 +10,6 @@
     "\\Client\\src\\views\\tripUpdateView",
     "\\Client\\src\\views\\userTripsList"
   ],
-  "SelectedNode": "\\Client\\src\\views\\main\\main.controller.js",
+  "SelectedNode": "\\Client",
   "PreviewInSolutionExplorer": false
 }
