@@ -47,5 +47,6 @@ angular.module('trips')
 
 		$scope.openTripView = (id) => {
 			window.location.href = `#!tripView?id=${id}`;
+			$scope.ws.send('trip deleted');
 		};
 	});

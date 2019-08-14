@@ -42,6 +42,7 @@ angular.module('trips').controller('AllTripsViewController', ($scope, $http, Tri
     
     $scope.openTripView = (id) => {
         window.location.href = `#!tripView?id=${id}`;
+        $scope.ws.close();
     };
 
 
