@@ -8,12 +8,12 @@ angular.module('trips').controller('MainController', ($scope, $http, TripService
 	});
 
 	// This function runs itself on init of the controller
-	(this.getAllTrips = async () => {
-		$scope.dataLoading = true;
+	(this.getHomeTrips = async () => {
+		$scope.tripsLoading = true;
 
 		try {
-			var alltrips = await TripService.GetAll();
-			var alltripsAndusers = await this.convertEmailToUsername(alltrips);
+			var alltrips = await TripService.GetHome(AuthenticationService.globals.currentUser.userid);
+			var alltripsAndusers = await this.convertEmailToUsername(alltrips.slice(0,Math.floor(window.innerWidth / 450)));
 
 			if (alltripsAndusers.length) {
 				$scope.trips = alltripsAndusers;
@@ -24,14 +24,14 @@ angular.module('trips').controller('MainController', ($scope, $http, TripService
 			console.error(error);
 		}
 		finally {
-			$scope.dataLoading = false;
+			$scope.tripsLoading = false;
 			$scope.$applyAsync();
 		}
 	})();
 
 	this.convertEmailToUsername = async (arr) => {
 		return await Promise.all(arr.map(async (x) => {
-			var user = await UserService.GetByEmail(x.email);
+			var user = await UserService.GetById(x.userid);
 			x.username = user.username;
 			x.visible = true;
 			return x;
@@ -74,7 +74,8 @@ angular.module('trips').controller('MainController', ($scope, $http, TripService
 			});
 		
 		$scope.dataLoading = false;
-		$scope.temp = res.data.main.temp
+		$scope.temp = res.data.main.temp;
+		$scope.$applyAsync();
 	}
 
 	this.calcVis = () => {

@@ -11,6 +11,15 @@ router.get('/', async (req, res, next) => {
     };
 });
 
+router.get('/getHomeTrips/:userId', async (req, res, next) => {
+    try {
+        const tripsList = await tripsRepo.getHomeTrips(req.params.userId);
+        res.send(tripsList);
+    } catch (err) {
+        res.status(500).send(`There was a problem getting trips list for the home page.\n Error: ${err.message}`)
+    };
+});
+
 router.get('/getUserTrips/:userId', async (req, res, next) => {
     try {
         const tripsList = await tripsRepo.getUserTrips(req.params.userId);
@@ -23,6 +32,10 @@ router.get('/getUserTrips/:userId', async (req, res, next) => {
 router.get('/getTripById/:tripId', async (req, res, next) => {
     try {
         const trip = await tripsRepo.getTripById(req.params.tripId);
+
+        trip.views++;
+        tripsRepo.updateTrip(trip);
+
         res.send(trip);
     } catch (err) {
         res.status(500).send(`There was a problem getting trip.\n Error: ${err.message}`)

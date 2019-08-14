@@ -12,6 +12,7 @@ import angular from 'angular';
         var service = {};
 
         service.GetAll = GetAll;
+        service.GetHome = GetHome;
         service.GetByNameTypeRegion = GetByNameTypeRegion;
         service.GetByDescViewDate = GetByDescViewDate;
 
@@ -21,6 +22,10 @@ import angular from 'angular';
             return $http.get('http://localhost:3000/api/trips').then(handleSuccess, handleError('Error getting all trips'));
         }
         
+        function GetHome(userId) {
+            return $http.get('http://localhost:3000/api/trips/getHomeTrips/' + userId).then(handleSuccess, handleError('Error getting all trips'));
+        }
+
         function GetByNameTypeRegion(name, type, region){
             return $http.post('http://localhost:3000/api/trips/getByNTR', {name, type, region}).then(handleSuccess, handleError('Error geting search results'));
         }

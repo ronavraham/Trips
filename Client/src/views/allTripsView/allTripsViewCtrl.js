@@ -8,9 +8,9 @@ angular.module('trips').controller('AllTripsViewController', ($scope, $http, Tri
     $scope.types = ['Exotic', 'City', 'Trekk'];
     $scope.trips = [];
     $scope.allTrips = [];
-    $scope.ws = new WebSocket('ws://localhost:3001/');
     $scope.videoUrl = require('@/assets/Sri Lanka.mp4');
     $scope.searchData = {};
+    $scope.searchState = undefined;
 
 	// This function runs itself on init of the controller
 	(this.getAllTrips = async () => {
@@ -18,18 +18,16 @@ angular.module('trips').controller('AllTripsViewController', ($scope, $http, Tri
 
 		try {
             var alltrips = await TripService.GetAll();
-            // We can remove this if all trips automatically have userid:
-            var alltripsAndusers = await this.convertEmailToUserID(alltrips);
             
-            alltripsAndusers.forEach(x => {
+            alltrips.forEach(x => {
                 if (x.userid === AuthenticationService.globals.currentUser.userid){
                     x.canUpdateOrDel = true;
                 }
             });
 
-			if (alltripsAndusers.length) {
-                $scope.trips = alltripsAndusers;
-                $scope.allTrips = alltripsAndusers;
+			if (alltrips.length) {
+                $scope.trips = alltrips;
+                $scope.allTrips = alltrips;
 			}
 		}
 		catch (error) {
@@ -41,14 +39,6 @@ angular.module('trips').controller('AllTripsViewController', ($scope, $http, Tri
 		}
     })();
 
-    
-    this.convertEmailToUserID = async (arr) => {
-		return await Promise.all(arr.map(async (x) => {
-			var user = await UserService.GetByEmail(x.email);
-            x.userid = user._id;
-			return x;
-		}));
-	}
     
     $scope.openTripView = (id) => {
         window.location.href = `#!tripView?id=${id}`;
@@ -68,19 +58,76 @@ angular.module('trips').controller('AllTripsViewController', ($scope, $http, Tri
 
     $scope.searchA = async () => {
         $scope.searchLoad = true;
-        $scope.trips = await TripService.GetByNameTypeRegion($scope.searchData.name, $scope.searchData.type, $scope.searchData.region);
+        var alltrips = await TripService.GetByNameTypeRegion($scope.searchData.name, $scope.searchData.type, $scope.searchData.region);
+        alltrips.forEach(x => {
+            if (x.userid === AuthenticationService.globals.currentUser.userid){
+                x.canUpdateOrDel = true;
+            }
+        });
+        $scope.trips = alltrips;
         $scope.searchLoad = false;
+        $scope.searchState = 'A';
         $scope.$applyAsync();
     }
 
     $scope.searchB = async () => {
         $scope.searchLoad = true;
-        $scope.trips = await TripService.GetByDescViewDate($scope.searchData.desc, $scope.searchData.viewsFrom, $scope.searchData.viewsTo, $scope.searchData.fromDate, $scope.searchData.toDate);
+        var alltrips = await TripService.GetByDescViewDate($scope.searchData.desc, $scope.searchData.viewsFrom, $scope.searchData.viewsTo, $scope.searchData.fromDate, $scope.searchData.toDate);
+        alltrips.forEach(x => {
+            if (x.userid === AuthenticationService.globals.currentUser.userid){
+                x.canUpdateOrDel = true;
+            }
+        });
+        $scope.trips = alltrips;
         $scope.searchLoad = false;
+        $scope.searchState = 'B';
         $scope.$applyAsync();
     }
 
     $scope.clearSearch = () => {
         $scope.trips = $scope.allTrips;
+        $scope.searchState = undefined;
     }
+
+    $scope.ws = new WebSocket('ws://localhost:3001/');
+
+    $scope.ws.onopen = () => {
+        console.log('ws connected');
+    };
+
+    $scope.ws.onmessage = async (msg) => {
+        if(!$scope.searchState)
+        {
+            var res = await TripService.GetAll();
+            res.forEach(x => {
+                if (x.userid === AuthenticationService.globals.currentUser.userid){
+                    x.canUpdateOrDel = true;
+                }
+            });
+            $scope.trips = res;
+        }
+        else if ($scope.searchState === 'A'){
+            var alltrips = await TripService.GetByNameTypeRegion($scope.searchData.name, $scope.searchData.type, $scope.searchData.region);
+            alltrips.forEach(x => {
+                if (x.userid === AuthenticationService.globals.currentUser.userid){
+                    x.canUpdateOrDel = true;
+                }
+            });
+            $scope.trips = alltrips;
+        }
+        else {
+            var alltrips  = await TripService.GetByDescViewDate($scope.searchData.desc, $scope.searchData.viewsFrom, $scope.searchData.viewsTo, $scope.searchData.fromDate, $scope.searchData.toDate);
+            alltrips.forEach(x => {
+                if (x.userid === AuthenticationService.globals.currentUser.userid){
+                    x.canUpdateOrDel = true;
+                }
+            });
+            $scope.trips = alltrips;
+        }
+        $scope.$applyAsync();
+    };
+
+    $scope.ws.onclose = () => {
+        console.log('ws closed');
+    };
 });

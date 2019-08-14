@@ -11,11 +11,16 @@ border-left: 5px solid black;">
   		<md-icon style="margin-left: 6px" ng_bind="'wb_sunny'"></md-icon>
   	</h5>
   </aside>
-  <header>
-  	<h2 ng-if="!dataLoading" style="margin-left: 12px; margin-bottom: 15px">These are the top {{numOfRec}} recommended trips for YOU!</h2>
+  <header style="display: flex;
+  justify-content: center;">
+  	<h2 ng-if="!dataLoading" style="margin-left: 12px; margin-bottom: 15px; font-family: RON">These are the top {{numOfRec}} recommended trips for YOU!</h2>
   </header>
-  <div style="display: flex" >
-    <div ng-repeat="trip in trips track by $index">
+  <div style="display: flex; justify-content: center;" >
+    <div ng-if="tripsLoading && ! dataLoading" layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 30px;">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <h4 ng-if="!tripsLoading && trips.length === 0">There are no suggestions for you right now. Please add some trips first!</h4>
+    <div ng-if="!tripsLoading" ng-repeat="trip in trips track by $index">
       <md-card ng-if="trip.visible" style="
       width: 450px;
       height : 475px

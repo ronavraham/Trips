@@ -98,7 +98,7 @@ const dbHelper = {
 	},
 	getByNTR(client, dbName, collectionName, params) {
 		return new Promise((resolve, reject) => {
-			const filter = { name: {$regex: ".*" + params.name + ".*"}, type: params.type, region: params.region  };
+			const filter = { name: {$regex: ".*" + params.name + ".*"}, selectedTripType: params.type, selectedTripArea: params.region  };
 			client.db(dbName).collection(collectionName).find(filter).toArray((err, result) => {
 				if (err) {
 					reject(err);

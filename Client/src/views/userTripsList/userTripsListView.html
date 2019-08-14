@@ -3,7 +3,8 @@
 	<div ng-if="dataLoading" layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 30px;">
 		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 	</div>
-	<md-list>
+	<md-list style="    overflow-y: scroll;
+    height: 605px;">
 		<md-list-item class="md-2-line" ng-repeat="item in trips" ng-click="openTripView(item._id)">
 			<img ng-src="{{item.image}}" class="md-avatar" alt="{{item.name}}" />
 			<div class="md-list-item-text">

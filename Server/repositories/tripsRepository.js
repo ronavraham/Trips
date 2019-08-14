@@ -1,4 +1,5 @@
 const dbHelper = require('../dbHelper');
+const KNN = require('ml-knn');
 
 const tripsRepository = {
     getAllTrips: async () => {
@@ -8,6 +9,64 @@ const tripsRepository = {
             const tripsList = await dbHelper.findInCollection(client, 'Trips', 'Trips', {}, {});
 
             return tripsList;
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+        finally {
+            dbHelper.closeClient(client);
+        }
+    },
+    getHomeTrips: async (userId) => {
+        let client;
+        try {
+            client = await dbHelper.getDbClient();
+            var tripsList = await dbHelper.findInCollection(client, 'Trips', 'Trips', {}, {});
+            var predictions = [];
+
+            let forML = tripsList.map((trip) => {
+                var days = Math.round(Math.abs((new Date(trip.toDate).getTime() - new Date(trip.fromDate).getTime())/(24*60*60*1000)));
+                predictions.push(trip.class);
+                return ([
+                    trip.typeId,
+                    days
+                ]);
+            });
+
+            var knn = new KNN(forML, predictions);
+            const myTrips = await dbHelper.findInCollection(client, 'Trips', 'Trips', { userid: userId }, {});
+            let myTripsforML = myTrips.map((trip) => {
+                var days = Math.round(Math.abs((new Date(trip.toDate).getTime() - new Date(trip.fromDate).getTime())/(24*60*60*1000)));
+                predictions.push(trip.class);
+                return ([
+                    trip.typeId,
+                    days
+                ]);
+            });
+
+            var ans = knn.predict(myTripsforML);
+            var countArr = [0, 0, 0];
+
+            ans.forEach((x) => {
+                countArr[x - 1]++;
+            });
+
+            const predictClass = countArr.indexOf(Math.max.apply(null, Object.values(countArr)));            
+            
+            var finalArray = tripsList.filter((x) => {
+                return x.class === predictClass + 1;
+            });
+            
+            var notMine = finalArray.filter((x) => {
+                return x.userid !== userId;
+            });
+            var mine = finalArray.filter((x) => {
+                return x.userid === userId;
+            });
+
+            finalArray = notMine.concat(mine);
+
+            return finalArray;
         } catch (err) {
             console.log(err);
             throw err;
@@ -34,6 +93,27 @@ const tripsRepository = {
         let client;
         try {
             client = await dbHelper.getDbClient();
+            newtrip.views = 0;
+
+            //ML
+            var tripsList = await dbHelper.findInCollection(client, 'Trips', 'Trips', {}, {});
+            var predictions = [];
+
+            let forML = tripsList.map((trip) => {
+                var days = Math.round(Math.abs((new Date(trip.toDate).getTime() - new Date(trip.fromDate).getTime())/(24*60*60*1000)));
+                predictions.push(trip.class);
+                return ([
+                    trip.typeId,
+                    days
+                ]);
+            });
+
+            var knn = new KNN(forML, predictions);
+
+            var tripVec = [newtrip.typeId, Math.round(Math.abs((new Date(newtrip.toDate).getTime() - new Date(newtrip.fromDate).getTime())/(24*60*60*1000)))]
+            var ans = knn.predict(tripVec);
+            newtrip.class = ans;    
+            
             result = await dbHelper.insertToCollection(client, 'Trips', 'Trips', newtrip);
 
             return result;
@@ -91,7 +171,7 @@ const tripsRepository = {
         let client;
         try {
             client = await dbHelper.getDbClient();
-            const tripsList = await dbHelper.groupBy(client, 'Trips', 'Trips', { _id: '$type', count: { $sum: 1 }}, { userid: { $eq: userId }});
+            const tripsList = await dbHelper.groupBy(client, 'Trips', 'Trips', { _id: '$selectedTripType', count: { $sum: 1 }}, { userid: { $eq: userId }});
 
             return tripsList.map((trip) => {
                 return {
@@ -125,7 +205,7 @@ const tripsRepository = {
         let client;
         try {
             client = await dbHelper.getDbClient();
-            const viewsList = await dbHelper.groupBy(client, 'Trips', 'Trips', { _id: '$region', count: { $sum: '$views' }}, {});
+            const viewsList = await dbHelper.groupBy(client, 'Trips', 'Trips', { _id: '$selectedTripArea', count: { $sum: '$views' }}, {});
 
             return viewsList.map((trip) => {
                 return {

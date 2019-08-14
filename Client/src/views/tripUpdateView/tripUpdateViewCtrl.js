@@ -4,15 +4,14 @@ import './tripUpdateView.less';
 
 angular.module('trips')
 	.controller('TripUpdateViewController', ($scope, $http, $routeParams, AuthenticationService) => {
-		$scope.tripTypes = [{ id: "FUN", name: "כיף" },
-		{ id: "TRACK", name: "מסלול" },
-		{ id: "LEARN", name: "למידה" }];
+		$scope.regions = ['Europe', 'Asia', 'South America', 'North America', 'Middle East', 'Africa'];
+		$scope.types = ['Exotic', 'City', 'Trekk'];
 
-		$scope.tripAreas = [{ id: "AMERICA", name: "אמריקה" },
-		{ id: "ASIA", name: "אסיה" },
-		{ id: "AFRICA", name: "אפריקה" },
-		{ id: "AUSTRALIA", name: "אוסטרליה" },
-			{ id: "EUROPE", name: "אירופה" }];
+		var tripTypeToId = {
+			"Trekk" : 3,
+			"City": 2,
+			"Exotic":1
+		};
 
 		$http.get(`http://localhost:3000/api/trips/getTripById/${$routeParams.id}`).then((res) => {
 			$scope.data = res.data;
@@ -23,7 +22,8 @@ angular.module('trips')
 			await $http.post('http://localhost:3000/api/trips/updateTrip', {
 				trip: angular.extend({},
 					$scope.data,
-					{ userid: AuthenticationService.globals.currentUser.userid })
+					{ userid: AuthenticationService.globals.currentUser.userid,
+					  typeId: tripTypeToId[$scope.data.selectedTripType]})
 			});
 
 			const ws = new WebSocket('ws://localhost:3001/');

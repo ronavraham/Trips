@@ -15,8 +15,8 @@
 				<md-input-container class="md-block">
 					<label>Trip Type</label>
 					<md-select ng-model="data.selectedTripType">
-						<md-optgroup label="tripTypes">
-							<md-option ng-repeat="item in tripTypes" ng-value="item.id">{{item.name}}</md-option>
+						<md-optgroup label="types">
+							<md-option ng-repeat="item in types" ng-value="item">{{item}}</md-option>
 						</md-optgroup>
 					</md-select>
 				</md-input-container>
@@ -24,8 +24,8 @@
 				<md-input-container class="md-block">
 					<label>Trip Area</label>
 					<md-select ng-model="data.selectedTripArea">
-						<md-optgroup label="tripAreas">
-							<md-option ng-repeat="item in tripAreas" ng-value="item.id">{{item.name}}</md-option>
+						<md-optgroup label="regions">
+							<md-option ng-repeat="item in regions" ng-value="item">{{item}}</md-option>
 						</md-optgroup>
 					</md-select>
 				</md-input-container>

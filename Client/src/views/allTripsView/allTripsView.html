@@ -79,7 +79,9 @@ align-items: stretch;">
     <div ng-if="searchLoad" layout="row" layout-sm="column" layout-align="space-around" style="flex: 4; margin-top: 30px;">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
-    <md-list ng-if="!searchLoad" style="flex: 4">
+    <md-list ng-if="!searchLoad" style="flex: 4;overflow-y: scroll;
+    flex: 4;
+    height: 678px;">
         <md-button class="md-raised md-primary" ng-click="clearSearch()">Reset Search</md-button>
         <md-list-item class="md-2-line" ng-repeat="trip in trips" ng-click="openTripView(trip._id)">
             <img ng-src="{{trip.image}}" class="md-avatar" alt="{{trip.name}}" />
