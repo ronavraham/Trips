@@ -4,10 +4,15 @@
 <div ng-if="!dataLoading" id="tripViewContainer">
 	<div class="GridComponent">
 		<img ng-src="{{data.image}}" style="border-radius: 10px; place-self: center; height: 100%; width: 100%; background-size: 100% 100%; grid-area: cTXeRk / cTXeRk / cTXeRk / cTXeRk;">
-		<h1 style="place-self: center start; color: rgb(255, 255, 255); font-weight: bold; text-shadow: rgb(0, 0, 0) 0px 0px 1px; grid-area: xOxCMA / xOxCMA / xOxCMA / xOxCMA; padding-left: 20px;">
+		<h1 style="place-self: center start;
+		color: rgb(101, 147, 251);
+		font-weight: bold;
+		text-shadow: rgb(0, 0, 0) 0px 0px 20px;
+		grid-area: xOxCMA / xOxCMA / xOxCMA / xOxCMA;
+		padding-left: 20px;">
 			{{ data.name }}
 		</h1>
-		<h4 style="place-self: end start; text-shadow: rgb(0, 0, 0) 0px 0px 1px; color: white; padding-left: 40px; grid-area: qRNqBy / qRNqBy / qRNqBy / qRNqBy;">
+		<h4 style="place-self: end start; text-shadow: rgb(0, 0, 0) 0px 0px 20px; color: rgb(101, 147, 251); padding-left: 40px; grid-area: qRNqBy / qRNqBy / qRNqBy / qRNqBy;">
 			{{ data.fromDate | date }} - {{ data.toDate | date}}
 		</h4>
 		<div style="    margin-left: 20px;

@@ -99,6 +99,21 @@ const tripsRepository = {
                     count: trip.count
                 }
             });
+        }
+        catch (err) {
+            console.log(err);
+            throw err;
+        } finally {
+            dbHelper.closeClient(client);
+        }
+    },
+    getByNTR : async (params) => {
+        let client;
+        try {
+            client = await dbHelper.getDbClient();
+            result = await dbHelper.getByNTR(client, 'Trips', 'Trips', params);
+
+            return result;
         } catch (err) {
             console.log(err);
             throw err;
@@ -118,6 +133,20 @@ const tripsRepository = {
                     views: trip.count
                 }
             });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        } finally {
+            dbHelper.closeClient(client);
+        }
+    },
+    getByDVD : async (params) => {
+        let client;
+        try {
+            client = await dbHelper.getDbClient();
+            result = await dbHelper.getByDVD(client, 'Trips', 'Trips', params);
+
+            return result;
         } catch (err) {
             console.log(err);
             throw err;

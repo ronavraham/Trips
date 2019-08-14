@@ -74,5 +74,22 @@ router.get('/getViewsPerRegion', async (req, res, next) => {
     };
 });
 
+router.post('/getByNTR', async (req, res, next) => {
+    try {
+        const tripsList = await tripsRepo.getByNTR(req.body);
+        res.send(tripsList);
+    } catch (err) {
+        res.status(500).send(`There was a problem search by NTR.\n Error: ${err.message}`)
+    };
+});
+
+router.post('/getByDVD', async (req, res, next) => {
+    try {
+        const tripsList = await tripsRepo.getByDVD(req.body);
+        res.send(tripsList);
+    } catch (err) {
+        res.status(500).send(`There was a problem search by DVD.\n Error: ${err.message}`)
+    };
+});
 
 module.exports = router;

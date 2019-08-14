@@ -96,6 +96,33 @@ const dbHelper = {
 			});
 		});
 	},
+	getByNTR(client, dbName, collectionName, params) {
+		return new Promise((resolve, reject) => {
+			const filter = { name: {$regex: ".*" + params.name + ".*"}, type: params.type, region: params.region  };
+			client.db(dbName).collection(collectionName).find(filter).toArray((err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result);
+				}
+			});
+		});
+	},
+	getByDVD(client, dbName, collectionName, params) {
+		return new Promise((resolve, reject) => {
+			const filter = { description: {$regex: ".*" + params.desc + ".*"},
+							 fromDate: { $gte: params.fromDate},
+							 toDate: { $lt: params.toDate},
+							 views: { $gte: params.viewsFrom, $lt: params.viewsTo } };
+			client.db(dbName).collection(collectionName).find(filter).toArray((err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result);
+				}
+			});
+		});
+	},
 	closeClient(client) {
 		client.close();
 	}

@@ -12,12 +12,22 @@ import angular from 'angular';
         var service = {};
 
         service.GetAll = GetAll;
+        service.GetByNameTypeRegion = GetByNameTypeRegion;
+        service.GetByDescViewDate = GetByDescViewDate;
 
         return service;
 
         function GetAll() {
-            return $http.get('http://localhost:3000/api/trips').then(handleSuccess, handleError('Error getting all users'));
-		}
+            return $http.get('http://localhost:3000/api/trips').then(handleSuccess, handleError('Error getting all trips'));
+        }
+        
+        function GetByNameTypeRegion(name, type, region){
+            return $http.post('http://localhost:3000/api/trips/getByNTR', {name, type, region}).then(handleSuccess, handleError('Error geting search results'));
+        }
+
+        function GetByDescViewDate(desc, viewsFrom, viewsTo, fromDate, toDate){
+            return $http.post('http://localhost:3000/api/trips/getByDVD', {desc, viewsFrom, viewsTo, fromDate, toDate}).then(handleSuccess, handleError('Error geting search results'));
+        }
 
         // private functions
 
