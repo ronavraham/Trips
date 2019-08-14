@@ -105,6 +105,25 @@ const tripsRepository = {
         } finally {
             dbHelper.closeClient(client);
         }
+    },
+    getViewsPerRegion: async () => {
+        let client;
+        try {
+            client = await dbHelper.getDbClient();
+            const viewsList = await dbHelper.groupBy(client, 'Trips', 'Trips', { _id: '$region', count: { $sum: '$views' }}, {});
+
+            return viewsList.map((trip) => {
+                return {
+                    region: trip._id,
+                    views: trip.count
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        } finally {
+            dbHelper.closeClient(client);
+        }
     }
 }
 

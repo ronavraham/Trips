@@ -9,19 +9,19 @@ angular.module('trips')
 		let radius = Math.min(width, height) / 2;
 		let g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-		let color = window.d3.scaleOrdinal(['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#a05d56', '#d0743c', '#ff8c00']);
+		let color = window.d3.scaleOrdinal(['#618cc9', '#a6c6f4', '#cfdff6', '#3f6dae', '#26518d']);
 
 		let pie = window.d3.pie()
 			.sort(null)
 			.value((d) => { return d.count; });
 
 		let path = window.d3.arc()
-			.outerRadius(radius - 10)
+			.outerRadius(radius)
 			.innerRadius(0);
 
 		let label = window.d3.arc()
-			.outerRadius(radius - 40)
-			.innerRadius(radius - 40);
+			.outerRadius(radius)
+			.innerRadius(0);
 
 		$http.get(`http://localhost:3000/api/trips/getUserTripsByTypes/${AuthenticationService.globals.currentUser.userid}`).then((res) => {
 			let data = res.data;
@@ -38,7 +38,7 @@ angular.module('trips')
 			arc.append('text')
 				.attr('transform', (d) => { return 'translate(' + label.centroid(d) + ')'; })
 				.attr('dy', '0.35em')
-				.text((d) => { return d.data.type; });
+				.text((d) => { return d.data.type + ", " + d.data.count; });
 		});
 	};
 
@@ -54,37 +54,41 @@ angular.module('trips')
 		let g = svg.append('g')
 			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-		$http.get('http://localhost:3000/games/getGamesPopularityCount').then((result) => {
-			let data = result.data;
+		$http.get('http://localhost:3000/api/trips/getViewsPerRegion').then((res) => {
+			let data = res.data;
 
-			x.domain(data.map((d) => { return d.name; }));
+			x.domain(data.map((d) => { return d.region; }));
 			y.domain([0, window.d3.max(data, (d) => { return d.views; })]);
 
 			g.append('g')
 				.attr('class', 'axis axis--x')
 				.attr('transform', 'translate(0,' + height + ')')
+				.attr("font-family", "Roboto")
 				.call(window.d3.axisBottom(x));
 
 			g.append('g')
 				.attr('class', 'axis axis--y')
+				.attr("font-family", "Roboto")
 				.call(window.d3.axisLeft(y).ticks(10))
 				.append('text')
 				.attr('transform', 'rotate(-90)')
 				.attr('y', 6)
 				.attr('dy', '0.71em')
 				.attr('text-anchor', 'end')
-				.text('views');
+				.text('Views');
 
 			g.selectAll('.bar')
 				.data(data)
 				.enter().append('rect')
 				.attr('class', 'bar')
-				.attr('x', (d) => { return x(d.name); })
+				.attr('x', (d) => { return x(d.region); })
 				.attr('y', (d) => { return y(d.views); })
+				.attr("fill", "#69b3a2")
 				.attr('width', x.bandwidth())
 				.attr('height', (d) => { return height - y(d.views); });
 		});
 	};
 
 	$scope.pieChart();
+	$scope.barChart();
 });

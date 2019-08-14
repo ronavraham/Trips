@@ -65,5 +65,14 @@ router.get('/getUserTripsByTypes/:userId', async (req, res, next) => {
     };
 });
 
+router.get('/getViewsPerRegion', async (req, res, next) => {
+    try {
+        const viewsList = await tripsRepo.getViewsPerRegion();
+        res.send(viewsList);
+    } catch (err) {
+        res.status(500).send(`There was a problem getting views per regions.\n Error: ${err.message}`)
+    };
+});
+
 
 module.exports = router;
